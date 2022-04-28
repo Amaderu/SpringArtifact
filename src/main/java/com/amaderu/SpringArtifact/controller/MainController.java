@@ -1,7 +1,7 @@
 package controller;
 
-import dao.ArtifactDAO;
-import entity.Artifact;
+import data.local.dao.ArtifactDAO;
+import data.local.entity.Artifact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

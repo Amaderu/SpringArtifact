@@ -1,7 +1,7 @@
-package init;
+package data.local.init;
 
-import dao.ArtifactDAO;
-import entity.Artifact;
+import data.local.dao.ArtifactDAO;
+import data.local.entity.Artifact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
