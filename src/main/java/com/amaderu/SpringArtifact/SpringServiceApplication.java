@@ -21,17 +21,20 @@ public class SpringServiceApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(SpringServiceApplication.class, args);
+        /*console();*/
+    }
+    static void console(){
         try {
-            /*Class.forName("org.h2.Driver");*/
+         Class.forName("org.h2.Driver");
             con = DriverManager.getConnection(url, user, password);
             stmt = con.createStatement();
             System.out.println(con.getSchema());
 
 
-            /*UUID uuid = UUID.randomUUID();
-            System.out.println(uuid.toString().replace("-",""));*/
-            /*String sql = "INSERT INTO PUBLIC.ARTIFACT (ID, CREATED, USERID, CATEGORY, DESCRIPTION) VALUES (RANDOM_UUID()"+",'2022-04-25 23:30:44.000000', 'asdas', 'asdas', 'asdas');";
-            stmt.executeUpdate(sql);*/
+            UUID uuid = UUID.randomUUID();
+            System.out.println(uuid.toString().replace("-",""));
+         String sql = "INSERT INTO PUBLIC.ARTIFACT (ID, CREATED, USER_ID, CATEGORY, DESCRIPTION) VALUES (RANDOM_UUID()"+",'2022-04-25 23:30:44.000000', 'asdas', 'asdas', 'asdas');";
+            stmt.executeUpdate(sql);
             rs = stmt.executeQuery("Select * FROM PUBLIC.ARTIFACT;");
 
             System.out.println(rs);
@@ -47,9 +50,9 @@ public class SpringServiceApplication {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } /*catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} */
+		}
         try {
             con.close();
         } catch (SQLException e) {
@@ -60,7 +63,6 @@ public class SpringServiceApplication {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 }
