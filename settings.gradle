@@ -1,3 +1,6 @@
 rootProject.name = 'SpringArtifact'
 include 'spring-security-client'
 include 'oauth-authorization-server'
+include 'oauth-resource-server'
+/*
+include 'application'*/

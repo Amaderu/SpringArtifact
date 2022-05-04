@@ -1,0 +1,30 @@
+#configuring port
+server:
+  port: 9000
+
+# ===============================
+# DB
+# ===============================
+spring:
+  #configuring application name
+  application:
+    name: 'SpringArtifactAuthServer'
+  datasource:
+    url: jdbc:h2:D:/Project/Java/IDEA/SpringArtifact/users;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
+    driverClassName: org.h2.Driver
+    username: admin
+    password: admin
+    #h2:
+    #console:
+    #enabled: true
+
+  # ===============================
+  # JPA / HIBERNATE
+  # ===============================
+  jpa:
+    show-sql:
+      true
+    hibernate.ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
