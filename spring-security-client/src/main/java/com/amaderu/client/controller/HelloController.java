@@ -1,42 +1,26 @@
 package com.amaderu.client.controller;
 
-import com.amaderu.client.entity.User;
-import com.amaderu.client.event.RegistrationCompleteEvent;
-import com.amaderu.client.model.UserModel;
-import com.amaderu.client.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
-import static org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient;
-
 @RestController
+@Slf4j
 public class HelloController {
     @Autowired
     private WebClient webClient;
 
     @GetMapping("/api/hello")
     public String hello(Principal principal) {
-        return String.format("Hello unregisted user %s",principal.getName());
+
+        return String.format("Hello %s, check this pages \n<a href=\"%s\">artifacts</a>\n<a href=\"%s\">comments</a>",principal.getName(),
+                "http://127.0.0.1:8081/api/artifacts", "http://127.0.0.1:8081/api/comments");
     }
-    @GetMapping("/api/users")
-    public String[] users(@RegisteredOAuth2AuthorizedClient("api-client-authorization-code") OAuth2AuthorizedClient client){
-        return this.webClient
-                .get()
-                .uri("http://127.0.0.1:8090/api/users")
-                .attributes(oauth2AuthorizedClient(client))
-                .retrieve()
-                .bodyToMono(String[].class)
-                .block();
-    }
+
+
+
 }

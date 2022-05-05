@@ -49,6 +49,9 @@ spring:
             redirect-uri: http://127.0.0.1:8081/authorized
             scope:
               - api.read
+              - api.create
+              - api.update
+              - api.delete
             client-name: api-client-authorization-code
         provider:
           spring:

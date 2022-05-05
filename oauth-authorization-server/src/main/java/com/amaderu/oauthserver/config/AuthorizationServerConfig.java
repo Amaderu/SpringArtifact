@@ -4,6 +4,7 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.UUID;
 
+@Slf4j
 @Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfig {
 
@@ -62,10 +64,15 @@ public class AuthorizationServerConfig {
                 .redirectUri(BASE_URL+"login/oauth2/code/api-client-oidc")
                 .redirectUri(BASE_URL+"authorized")
                 .scope(OidcScopes.OPENID)
+                .scope("api.create")
                 .scope("api.read")
+                .scope("api.update")
+                .scope("api.delete")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
                 .build();
-
+        //TODO Remove
+        log.info(registeredClient.toString());
+        log.info(registeredClient.getScopes().toString());
                 return new InMemoryRegisteredClientRepository(registeredClient);
     }
 
