@@ -1,5 +1,7 @@
 package com.amaderu.client.config;
 
+import com.amaderu.client.service.ClientAuthenticationSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
 public class WebSecurityConfig {
+
+    @Autowired
+    ClientAuthenticationSuccessHandler successHandler;
 
     private static final String[] WHITE_LIST= {
             "/hello",
@@ -36,7 +41,7 @@ public class WebSecurityConfig {
                 .antMatchers("/api/**").authenticated()
                 .and()
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer ->
-                        httpSecurityOAuth2LoginConfigurer.loginPage("/oauth2/authorization/api-client-oidc"))
+                        httpSecurityOAuth2LoginConfigurer.loginPage("/oauth2/authorization/api-client-oidc").successHandler(successHandler))
                 .oauth2Client(Customizer.withDefaults());
                 /*.antMatchers("/**").hasRole("USER")
                 .and()

@@ -56,7 +56,7 @@ public class AuthorizationServerConfig {
         RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId(CLIENT_ID)
                 .clientSecret(passwordEncoder.encode(SECRET))
-                //TODO change to JWT
+                //TODO change to JWT, and check scopes
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.PASSWORD)
@@ -73,6 +73,8 @@ public class AuthorizationServerConfig {
         //TODO Remove
         log.info(registeredClient.toString());
         log.info(registeredClient.getScopes().toString());
+        log.info(registeredClient.getTokenSettings().toString());
+        log.info(registeredClient.getClientAuthenticationMethods().toString());
                 return new InMemoryRegisteredClientRepository(registeredClient);
     }
 
