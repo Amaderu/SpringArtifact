@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Artifacts</title>
+</head>
+<body>
+<div th:switch="${artifacts}">
+    <h2 th:case="null">No artifacts found!</h2>
+    <div th:case="*">
+        <h2>Artifacts</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>created</th>
+                <th>userId</th>
+                <th>category</th>
+                <th>description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="artifact : ${artifacts}">
+                <td th:text="${artifact.id}"></td>
+                <td th:text="${#dates.format(artifact.created, 'dd-MM-yyyy HH:mm:ss.SS')}"></td>
+                <td th:text="${artifact.userId}"></td>
+                <td th:text="${artifact.category}"></td>
+                <td th:text="${artifact.description}"></td>
+                <td><a th:href="@{artifact-update/{id}(id=${artifact.id})}">Edit</a></td>
+                <td><a th:href="@{artifact-delete/{id}(id=${artifact.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="artifact-create">Create artifact</a></p>
+</div>
+</body>
+</html>

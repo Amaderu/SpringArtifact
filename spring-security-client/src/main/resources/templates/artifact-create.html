@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create artifact</title>
+</head>
+<body>
+<form action="#" th:action="@{/api/artifact-create}" th:object="${artifact}" method="post">
+    <label for="created">Created date</label>
+    <input type="datetime-local" th:field="*{created}" id="created" placeholder="Created date">
+    <label for="userId">UserId</label>
+    <input type="text" th:field="*{userId}" id="userId" placeholder="UserId">
+    <label for="category">Category</label>
+    <input type="text" th:field="*{category}" id="category" placeholder="Category">
+    <label for="description">Description</label>
+    <input type="text" th:field="*{description}" id="description" placeholder="Description">
+    <input type="submit" value="Create Artifact">
+</form>
+</body>
+</html>

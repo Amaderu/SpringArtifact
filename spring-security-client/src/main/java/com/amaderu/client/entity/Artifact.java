@@ -4,18 +4,18 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
-@Data
+
+
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "Artifact")
 public class Artifact {
 
     /*@Id
@@ -42,6 +42,7 @@ public class Artifact {
     @Getter
     @Setter
     UUID id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     Date created;
     String userId;
     String category;

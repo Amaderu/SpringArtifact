@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Artifact</title>
+</head>
+<body>
+<form action="#" th:action="@{/api/artifact-create}" th:object="${artifact}" method="post">
+    <label for="id">Artifact Id</label>
+    <input readonly type="text" th:field="*{id}" id="id" placeholder="Artifact Id">
+    </br>
+    <label for="created">Created date</label>
+    <input type="datetime-local" th:field="*{created}" id="created" placeholder="Created date">
+    </br>
+    <label for="userId">UserId</label>
+    <input type="text" th:field="*{userId}" id="userId" placeholder="UserId">
+    </br>
+    <label for="category">Category</label>
+    <input type="text" th:field="*{category}" id="category" placeholder="Category">
+    </br>
+    <label for="description">Description</label>
+    <input type="text" th:field="*{description}" id="description" placeholder="Description">
+    </br>
+    <input type="submit" value="Update Artifact">
+</form>
+</body>
+</html>

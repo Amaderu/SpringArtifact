@@ -21,8 +21,24 @@ public class ArtifactService {
         return artifact;
     }
 
-    public Artifact loadArtifact(UUID id){
-        Optional<Artifact> artifact = artifactRepository.findById(id);
+    public Artifact loadArtifact(UUID artifactId){
+        Optional<Artifact> artifact = artifactRepository.findById(artifactId);
         return artifact.orElse(null);
+        //artifact.orElseThrow(() -> new ResourceNotFoundException("Artifact not found for this id :: " + artifactId)
+    }
+    public Artifact saveArtifact(Artifact artifact){
+        return artifactRepository.save(artifact);
+    }
+
+    //FIXME fix FK_ (FK_ARTIFACT_COMMENT) to deletet strategy
+    //Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.DataIntegrityViolationException: could not execute statement; SQL [n/a]; constraint ["FK_ARTIFACT_COMMENT: PUBLIC.COMMENT FOREIGN KEY(ARTIFACTID) REFERENCES PUBLIC.ARTIFACT(ID) ('f71a1319-4850-4686-89ea-341789cafaa6')"; SQL statement:
+    //delete from artifact where id=? [23503-212]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement] with root cause
+    //
+    //org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException: Нарушение ссылочной целостности: "FK_ARTIFACT_COMMENT: PUBLIC.COMMENT FOREIGN KEY(ARTIFACTID) REFERENCES PUBLIC.ARTIFACT(ID) ('f71a1319-4850-4686-89ea-341789cafaa6')"
+    //Referential integrity constraint violation: "FK_ARTIFACT_COMMENT: PUBLIC.COMMENT FOREIGN KEY(ARTIFACTID) REFERENCES PUBLIC.ARTIFACT(ID) ('f71a1319-4850-4686-89ea-341789cafaa6')"; SQL statement:
+    //delete from artifact where id=? [23503-212]
+
+    public void deleteArtifact(Artifact artifact){
+        artifactRepository.delete(artifact);
     }
 }
