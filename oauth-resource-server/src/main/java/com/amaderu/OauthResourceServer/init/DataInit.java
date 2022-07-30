@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Component
@@ -35,16 +36,14 @@ public class DataInit implements ApplicationRunner {
         long count = artifactRepository.count();
 
         if (count == 0) {
-            Artifact p1 = new Artifact();
-
-            p1.setUserId(UUID.randomUUID().toString());
-            p1.setCategory("Оружие"+count);
-            p1.setDescription("Оружие древних времён"+count);
-            //Date d1 = df.parse(Calendar.getInstance().getTime().toString());
-            /*Date d1 = df.parse("2022-04-25 23:30:44.000000");
-            p1.setCreated(d1);*/
-
-            artifactRepository.save(p1);
+            for (int i = 0; i < 2; i++) {
+                Artifact p1 = new Artifact();
+                p1.setUserId(UUID.randomUUID().toString());
+                p1.setCategory("Оружие" + count);
+                p1.setDescription("Оружие древних времён" + count);
+                p1.setCreated(LocalDate.now());
+                artifactRepository.save(p1);
+            }
         }
         long countComments = commentRepository.count();
 

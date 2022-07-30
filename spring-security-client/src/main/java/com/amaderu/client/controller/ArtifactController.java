@@ -22,8 +22,10 @@ import reactor.netty.resources.ConnectionProvider;
 
 import javax.websocket.server.PathParam;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient;
 
@@ -60,7 +62,7 @@ public class ArtifactController {
         return response.block();
     }
 
-    @GetMapping("/api/artifacts")
+    /*@GetMapping("/api/artifacts")
     public String getArtifacts(Model model, @RegisteredOAuth2AuthorizedClient("api-client-authorization-code") OAuth2AuthorizedClient client) {
         Mono<List<Artifact>> response = this.webClient
                 .get()
@@ -75,6 +77,27 @@ public class ArtifactController {
         //log.info(client.getAccessToken().toString());
         model.addAttribute("artifacts", artifacts);
         return "artifacts-list";
+    }*/
+
+    //FIXME перенести логику формирования строки запроса с параметрами сортировки
+    @GetMapping(path = "/api/artifacts", params ="sort", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody List<Artifact> getArtifacts(Model model, @RequestParam(required = false, name = "sort") String[] sorting,
+                               @RegisteredOAuth2AuthorizedClient("api-client-authorization-code") OAuth2AuthorizedClient client) {
+        String sort = Arrays.stream(sorting).collect(Collectors.joining("&sort="));
+        log.info(sort);
+        Mono<List<Artifact>> response = this.webClient
+                .get()
+                .uri("http://127.0.0.1:8090/api/artifacts?sort="+sort)//?sort=column1,direction1&sort=column2,direction2
+                .attributes(oauth2AuthorizedClient(client))
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<List<Artifact>>() {
+                });
+        List<Artifact> artifacts = response.block();
+        log.info(client.getPrincipalName());
+        log.info(client.getAccessToken().toString());
+        model.addAttribute("artifacts", artifacts);
+        return response.block();
     }
 
     @GetMapping(path = "/api/artifact-create")

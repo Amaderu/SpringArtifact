@@ -1,15 +1,10 @@
 package com.amaderu.client.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 
 @Entity
-@Data
-@NoArgsConstructor
 //@Table(name = "verification_token")
 public class VerificationToken {
     private static final int EXPIRATION_TIME = 15;
@@ -41,10 +36,54 @@ public class VerificationToken {
         this.expirationTime = calculateExpirationDate(EXPIRATION_TIME);
     }
 
+    public VerificationToken() {
+
+    }
+
+    public VerificationToken(Long id, String token, Date expirationTime, User user) {
+        this.id = id;
+        this.token = token;
+        this.expirationTime = expirationTime;
+        this.user = user;
+    }
+
+
     private Date calculateExpirationDate(int expirationTime) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(new Date().getTime());
         calendar.add(Calendar.MINUTE, expirationTime);
         return new Date(calendar.getTime().getTime());
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Date getExpirationTime() {
+        return expirationTime;
+    }
+
+    public void setExpirationTime(Date expirationTime) {
+        this.expirationTime = expirationTime;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

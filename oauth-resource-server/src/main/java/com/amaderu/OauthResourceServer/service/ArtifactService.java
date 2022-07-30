@@ -2,7 +2,10 @@ package com.amaderu.OauthResourceServer.service;
 
 import com.amaderu.OauthResourceServer.entity.Artifact;
 import com.amaderu.OauthResourceServer.repository.ArtifactRepository;
+import net.bytebuddy.TypeCache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,10 +24,14 @@ public class ArtifactService {
         return artifact;
     }
 
+    public List<Artifact> loadArtifacts(List<Sort.Order> ordersList){
+        List<Artifact> artifact = (List<Artifact>) artifactRepository.findAll(Sort.by(ordersList));
+        return artifact;
+    }
+
     public Artifact loadArtifact(UUID artifactId){
         Optional<Artifact> artifact = artifactRepository.findById(artifactId);
-        return artifact.orElse(null);
-        //artifact.orElseThrow(() -> new ResourceNotFoundException("Artifact not found for this id :: " + artifactId)
+        return artifact.orElseThrow(() -> new ResourceNotFoundException("Artifact not found for this id :: " + artifactId));
     }
     public Artifact saveArtifact(Artifact artifact){
         return artifactRepository.save(artifact);
@@ -40,5 +47,12 @@ public class ArtifactService {
 
     public void deleteArtifact(Artifact artifact){
         artifactRepository.delete(artifact);
+    }
+
+    public void deleteArtifactById(UUID artifactId){
+        if(!artifactRepository.existsById(artifactId)) throw
+                new ResourceNotFoundException("Artifact not found for this id :: " + artifactId);
+        Optional<Artifact> artifact = artifactRepository.findById(artifactId);
+        artifact.ifPresent(value -> artifactRepository.delete(value));
     }
 }

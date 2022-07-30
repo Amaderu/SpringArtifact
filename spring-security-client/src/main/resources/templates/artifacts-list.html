@@ -22,7 +22,7 @@
             <tbody>
             <tr th:each="artifact : ${artifacts}">
                 <td th:text="${artifact.id}"></td>
-                <td th:text="${#dates.format(artifact.created, 'dd-MM-yyyy HH:mm:ss.SS')}"></td>
+                <td th:text="${artifact.created}"></td>
                 <td th:text="${artifact.userId}"></td>
                 <td th:text="${artifact.category}"></td>
                 <td th:text="${artifact.description}"></td>

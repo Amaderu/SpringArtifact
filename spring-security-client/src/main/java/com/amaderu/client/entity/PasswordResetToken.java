@@ -1,15 +1,10 @@
 package com.amaderu.client.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 
 @Entity
-@Data
-@NoArgsConstructor
 public class PasswordResetToken {
     private static final int EXPIRATION_TIME = 15;
     @Id
@@ -26,6 +21,9 @@ public class PasswordResetToken {
             foreignKey = @ForeignKey(name = "FK_USER_PASSWORD_TOKEN")
     )
     private User user;
+
+    public PasswordResetToken() {
+    }
 
     public PasswordResetToken(User user, String token) {
         super();
